@@ -1,0 +1,40 @@
+$font-title: '';
+$font-text: '';
+
+$fonts-h1: '';
+$fonts-h2: '';
+$fonts-h3: '';
+$fonts-h4: '';
+
+$fonts-p: '';
+
+$link-color: '';
+
+$fields-grey: rgb(219, 219, 219);
+$fields-focus: #3e49c1;
+$fields-error: red;
+$fields-hover: rgb(232, 232, 232);
+$fields-background: white;
+$fields-radius: 5px;
+
+$loading-border: rgb(236, 236, 236);
+$loading-background: rgb(219, 219, 219);
+$loading-process: #ECECEC;
+
+$screens: (
+  wide: 1300,
+  large: 1200,
+  medium: 992,
+  small: 767,
+  exsm: 576
+);
+
+@mixin media($value) {
+  $width: map_get($screens, $value);
+  @if ($width != 0) {
+    @media screen and (max-width: $width + 'px') {
+      @content
+    }
+  }
+}
+
