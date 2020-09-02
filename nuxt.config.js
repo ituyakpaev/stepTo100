@@ -10,6 +10,9 @@ export default {
   ** See https://nuxtjs.org/api/configuration-target
   */
   target: 'server',
+  generate: {
+    subFolders: false
+  },
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -25,17 +28,15 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Global CSS
-  */
   css: [
     '~assets/css/styles.scss'
   ],
   plugins: [
     '~plugins/fields',
-    '~plugins/interface'
+    '~plugins/interface',
+    '~plugins/inject.js'
   ],
-  components: false,
+  components: true,
   /*
   ** Nuxt.js dev-modules
   */

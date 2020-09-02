@@ -1,5 +1,11 @@
-$font-title: '';
-$font-text: '';
+@font-face {
+  font-family: Bebas; /* Имя шрифта */
+  src: url(~assets/fonts/19471.ttf) format('truetype'); /* Путь к файлу со шрифтом */
+  font-style: normal;
+}
+
+$font-title: Bebas;
+$font-text: Arial;
 
 $fonts-h1: '';
 $fonts-h2: '';

@@ -1,8 +1,21 @@
 <template>
   <div>
+    <headerh />
     <Nuxt />
   </div>
 </template>
+
+<script>
+  import headerh from "../components/pages/regular/header";
+  //import footerh from "../components/layout/footer/index";
+
+  export default  {
+    components: {
+      //footerh,
+      headerh
+    }
+  }
+</script>
 
 <style>
 html {
