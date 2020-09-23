@@ -1,12 +1,25 @@
 <template>
   <div class="holder">
-    <div class="manage__form">
-      <input-box v-for="(input, key) in model" :key="key" v-model="input.value" :label="input.label" :error-text="input.error"/>
-      <button @click="save" class="button">
-        Добавить
-      </button>
+    <div class="manage">
+      <div class="manage__form">
+        <input-box v-for="(input, key) in model" :key="key" v-model.trim="input.value" :label="input.label" :error-text="input.error"/>
+        <input-box v-model.trim="increased" label="Повысил балл на" :disabled="true"/>
+      </div>
+      <div class="manage__buttons">
+        <button @click="save" class="button-classic">
+          Добавить
+        </button>
+        <button @click="getResult" class="button-classic">
+          Получить результат
+        </button>
+      </div>
     </div>
-    <table-box :headers="table.headers" :data="table.rows"/>
+    <table-box :headers="table.headers" :data="table.rows" :show_manage='false' style="max-width: 100%;"
+      @open="deleteRow"/>
+    <modal :show="modal.showed" @close="modal.showed = false">
+      Скопируйте результат и отправьте нам.
+      <textarea :value="modal.result" style="margin-top: 20px; height: 300px;" />
+    </modal>
   </div>
 </template>
 
@@ -15,7 +28,7 @@
   import InputBox from "../components/form/fields/inputBox";
   export default {
     name: "manage",
-    components: {InputBox, TableBox},
+    components: { InputBox, TableBox },
     data() {
       return {
         result: [],
@@ -23,6 +36,17 @@
           name: {
             label: 'Имя ученика',
             placeholder: 'Иван Иванов',
+            value: '',
+            error: ''
+          },
+
+          vk: {
+            label: 'Ссылка на ВК',
+            value: '',
+            error: ''
+          },
+          instagram: {
+            label: 'Ссылка на Инстаграм',
             value: '',
             error: ''
           },
@@ -51,11 +75,6 @@
             value: '',
             error: ''
           },
-          increased: {
-            label: 'Повысил балл на',
-            value: '',
-            error: ''
-          },
           wentTo: {
             label: 'Университет',
             value: '',
@@ -66,10 +85,12 @@
           headers: {
             index: {
               title: 'Номер',
-              type: 'index'
+              type: 'index',
+              mobile_show: true
             },
             name: {
-              title: 'Имя'
+              title: 'Имя',
+              mobile_show: true
             },
             city: {
               title: 'Город'
@@ -92,11 +113,14 @@
               type: Number
             },
             wentTo: {
-              title: 'Поступил',
-              type: Boolean
+              title: 'Поступил'
             }
           },
           rows: []
+        },
+        modal: {
+          showed: false,
+          result: ''
         }
       }
     },
@@ -112,20 +136,32 @@
         get() {
           let res = {}
           Object.keys(this.model).map(key => {
-            res[key] = this.model[key].value
+            if (key !== 'vk' && key !== 'instagram') {
+              res[key] = this.model[key].value
+            }
           })
+
+          res.social = {}
+
+          if (this.model.vk.value) {
+            res.social.vk = this.model.vk.value
+          }
+          if (this.model.instagram.value) {
+            res.social.instagram = this.model.instagram.value
+          }
           return res
         }
       },
 
-      errors() {
-        return Object.keys(this.model).map(key => {
-          return !!(this.model[key].error)
-        }).indexOf(true) !== -1
+      increased() {
+        console.log(Number(this.model.EGERate.value || 0))
+        console.log(Number(this.model.beforeRate.value || 0))
+        return Number(this.model.EGERate.value || 0) - Number(this.model.beforeRate.value || 0)
       }
     },
     methods: {
       validate() {
+        return true
         Object.keys(this.student).map(key => {
           if (this.student[key]) {
             this.model[key].error = 'Поле не заполнено'
@@ -133,11 +169,14 @@
             this.model[key].error = ''
           }
         })
-      },
-      save() {
-        this.validate()
 
-        if (this.errors) {
+        return Object.keys(this.model).map(key => {
+          return !!(this.model[key].error)
+        }).indexOf(true) !== -1
+      },
+
+      save() {
+        if (this.validate()) {
           this.table.rows.push(this.student)
 
           this.student = {
@@ -146,10 +185,25 @@
             completionYear: '',
             subject: '',
             beforeRate: '',
+            vk: '',
+            instagram: '',
             EGERate: '',
             increased: '',
             wentTo: ''
           }
+        }
+      },
+
+      getResult() {
+        this.modal.showed = true
+        this.modal.result = JSON.stringify(this.table.rows)
+      },
+
+      deleteRow(data, index) {
+        console.log(data)
+        console.log(index)
+        if (confirm('Точно хотите удалить строку?')) {
+          this.table.rows.splice(index, 1)
         }
       }
     },
@@ -174,6 +228,10 @@
       .input-box {
         margin-right: 10px;
       }
+    }
+
+    &__buttons {
+      margin-bottom: 20px;
     }
   }
 

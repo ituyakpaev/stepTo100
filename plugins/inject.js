@@ -48,7 +48,7 @@ export default (context, inject) => {
           let getStrap = w => {
             let r = null
             this.width.map((point, index) => {
-              if (w < point.width && !r) {
+              if (w <= point.width && !r) {
                 r = point
               }
             })

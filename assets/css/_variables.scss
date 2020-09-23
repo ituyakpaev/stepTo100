@@ -1,6 +1,11 @@
 @font-face {
   font-family: Bebas; /* Имя шрифта */
   src: url(~assets/fonts/19471.ttf) format('truetype'); /* Путь к файлу со шрифтом */
+}
+
+@font-face {
+  font-family: Montserrat; /* Имя шрифта */
+  src: url(~assets/fonts/montserrat.ttf) format('truetype'); /* Путь к файлу со шрифтом */
   font-style: normal;
 }
 
@@ -31,8 +36,9 @@ $screens: (
   wide: 1300,
   large: 1200,
   medium: 992,
-  small: 767,
-  exsm: 576
+  small: 860,
+  exsm: 576, //460, //576,
+  exexsm: 335
 );
 
 @mixin media($value) {
@@ -43,4 +49,6 @@ $screens: (
     }
   }
 }
+
+
 

@@ -125,6 +125,43 @@ p, .text {
   border: 5px solid #EF504F;
   box-sizing: border-box;
   color: #FFFFFF;
+
+  @include media(small) {
+    background-color: #EF504F;
+  }
+
+  @include media(exsm) {
+    padding: 16px 25px 14px;
+  }
+
+  @include media(exexsm) {
+    padding: 16px 5px 14px;
+  }
+
+  &-classic {
+    all: unset;
+    cursor: pointer;
+    background-color: #67adef;
+    padding: 7px;
+    border-radius: 5px;
+    margin-right: 20px;
+    z-index: 1;
+    position: relative;
+    width: max-content;
+    font-style: normal;
+    font-weight: normal;
+    transition: all .3s;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    border: 1px solid #67adef;
+    box-sizing: border-box;
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: #4e82b3;
+    }
+  }
 }
 
 .table {
@@ -133,7 +170,46 @@ p, .text {
 
   &__manage {
     display: flex;
+    justify-content: space-between;
     height: 36px;
+    margin-bottom: 15px;
+
+    .select__inner, .select-control__open {
+      @include media(small) {
+        width: 200px;
+      }
+      @include media(exsm) {
+        width: 100%;
+      }
+    }
+
+    @include media(exsm) {
+      flex-direction: column;
+      height: unset;
+    }
+
+    &-item {
+      display: flex;
+      height: 41px;
+
+      @include media(exsm) {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        .select {
+          width: calc(100% - 8px);
+        }
+      }
+
+      &:not(:first-child) {
+        margin-left: 10px;
+
+        @include media(exsm) {
+          margin-left: 0px;
+        }
+      }
+    }
 
     &-addnew {
       width: 100px;
@@ -196,6 +272,7 @@ p, .text {
 
   &__row {
     display: flex;
+    border-bottom: 1px solid #c4cdd5;
 
     &-header {
       display: flex;
@@ -203,6 +280,7 @@ p, .text {
       box-sizing: content-box;
       font-weight: 600;
       height: 36px;
+      cursor: pointer;
     }
 
     &:hover {
@@ -213,19 +291,22 @@ p, .text {
   &__cell {
     cursor: pointer;
     display: flex;
-    border-bottom: 1px solid #c4cdd5;
     text-align: left;
     align-items: center;
     height: 54px;
-    padding: 12px 0px 12px 0;
+    padding: 12px 0 12px 5px;
     width: 200px;
+
+    @include media(large) {
+      height: max-content;
+    }
 
     &-header {
       width: 200px;
-      padding-right: 10px;
       text-align: left;
       display: flex;
       align-items: center;
+      padding: 12px 0 12px 5px;
 
       &:first-child {
         padding-left: 12px;
@@ -235,10 +316,10 @@ p, .text {
         padding-right: 12px;
       }
 
-    }
+      &.sorted {
+        text-decoration: underline;
+      }
 
-    &:hover {
-      background-color: rgb(245,246,247);
     }
 
     &:first-child {
@@ -257,6 +338,10 @@ p, .text {
       width: 100%;
       height: 22px;
       border-radius: 5px;
+
+      @include media(large) {
+        height: max-content;
+      }
     }
   }
 

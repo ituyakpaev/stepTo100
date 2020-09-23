@@ -111,11 +111,14 @@
         },
         created () {
             let self = this
-            window.addEventListener('click', function(e) {
+
+            if (typeof window !== 'undefined') {
+              window.addEventListener('click', function (e) {
                 if (!self.$el.contains(e.target)) {
-                    self.opened = false
+                  self.opened = false
                 }
-            })
+              })
+            }
         }
     }
 </script>

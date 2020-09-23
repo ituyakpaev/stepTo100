@@ -112,6 +112,8 @@
 
         &__inner {
             padding: 20px;
+            display: flex;
+          flex-direction: column;
         }
     }
 
